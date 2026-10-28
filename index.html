@@ -643,6 +643,129 @@
         }
 
         /* =========================
+           QUIZ DES BONS RÉFLEXES
+        ========================== */
+
+        .quiz-section {
+            background: var(--blanc);
+        }
+
+        .quiz-box {
+            max-width: 850px;
+            margin: 50px auto 0;
+            background: var(--bleu);
+            color: var(--blanc);
+            padding: 40px;
+            border-radius: 20px;
+            border-top: 6px solid var(--orange);
+            box-shadow: 0 10px 30px rgba(11,31,58,0.15);
+        }
+
+        .quiz-progress {
+            height: 8px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 22px;
+        }
+
+        .quiz-progress span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: var(--orange);
+            border-radius: 8px;
+            transition: width 0.4s ease;
+        }
+
+        .quiz-count {
+            color: var(--orange);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .quiz-question {
+            font-size: 24px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .quiz-answer {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 14px;
+            padding: 16px 24px;
+            background: transparent;
+            color: var(--blanc);
+            border: 2px solid rgba(255,255,255,0.35);
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .quiz-answer:hover:not(:disabled) {
+            border-color: var(--orange);
+            background: rgba(255,122,0,0.15);
+            transform: translateX(6px);
+        }
+
+        .quiz-answer:disabled {
+            cursor: default;
+        }
+
+        .quiz-answer.correct {
+            background: #1f9d55;
+            border-color: #1f9d55;
+        }
+
+        .quiz-answer.wrong {
+            background: #c0392b;
+            border-color: #c0392b;
+        }
+
+        .quiz-explain {
+            margin-top: 20px;
+            padding: 18px 22px;
+            background: rgba(255,122,0,0.12);
+            border-left: 6px solid var(--orange);
+            border-radius: 12px;
+            line-height: 1.7;
+        }
+
+        .quiz-box .btn {
+            border: 0;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
+        }
+
+        .quiz-result {
+            text-align: center;
+        }
+
+        .quiz-score {
+            font-size: 90px;
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--orange);
+            text-shadow: 0 0 30px rgba(255,122,0,0.5);
+        }
+
+        .quiz-verdict {
+            font-size: 30px;
+            margin: 10px 0 15px;
+        }
+
+        .quiz-result p {
+            font-size: 19px;
+            line-height: 1.7;
+        }
+
+        /* =========================
            RESPONSIVE
         ========================== */
 
@@ -666,6 +789,8 @@
                 gap: 12px;
                 padding: 15px 8px;
                 font-size: 13px;
+                flex-wrap: wrap;
+                row-gap: 6px;
             }
 
             section {
@@ -683,6 +808,27 @@
             .join h2 {
                 font-size: 35px;
             }
+
+            .quiz-box {
+                padding: 25px 18px;
+            }
+
+            .quiz-question {
+                font-size: 20px;
+            }
+
+            .quiz-answer {
+                font-size: 16px;
+                border-radius: 25px;
+            }
+
+            .quiz-score {
+                font-size: 70px;
+            }
+
+            .quiz-verdict {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -695,6 +841,7 @@
         <a href="#accueil">Accueil</a>
         <a href="#role">Notre rôle</a>
         <a href="#ete">Période estivale</a>
+        <a href="#quiz">Quiz</a>
         <a href="#photos">Photos</a>
         <a href="#rejoindre">Nous rejoindre</a>
     </nav>
@@ -831,6 +978,21 @@
 
     </section>
 
+
+    <!-- QUIZ DES BONS RÉFLEXES -->
+
+    <section id="quiz" class="quiz-section">
+
+        <h2 class="section-title">Quiz des bons réflexes</h2>
+
+        <p class="intro">
+            6 questions pour tester vos réflexes face au risque d'incendie.
+            Avec au moins 4 bonnes réponses, vous avez les bons réflexes !
+        </p>
+
+        <div class="quiz-box" id="quizBox" aria-live="polite"></div>
+
+    </section>
 
 
     <!-- PHOTOS -->
@@ -1123,6 +1285,187 @@
                 showPhoto(currentPhoto + 1);
             }
         });
+    </script>
+
+
+    <!-- SCRIPT DU QUIZ -->
+
+    <script>
+        (function () {
+
+            /* Nombre de bonnes réponses (sur 6) pour avoir "les bons réflexes" */
+            const SEUIL = 4;
+
+            const questions = [
+                {
+                    q: "Vous apercevez de la fumée dans un massif. Que faites-vous en premier ?",
+                    c: [
+                        "J'essaie d'éteindre le feu moi-même",
+                        "J'appelle le 18 ou le 112 et j'indique le lieu précis",
+                        "J'attends de voir si ça grossit"
+                    ],
+                    b: 1,
+                    e: "Chaque minute compte : appelez immédiatement le 18 ou le 112, donnez le lieu le plus précisément possible, puis éloignez-vous."
+                },
+                {
+                    q: "Le niveau de vigilance du jour est rouge. Que signifie-t-il ?",
+                    c: [
+                        "Il faut simplement être prudent",
+                        "L'accès aux massifs forestiers est interdit",
+                        "Seuls les barbecues sont interdits"
+                    ],
+                    b: 1,
+                    e: "Lorsque le niveau est rouge, l'accès aux massifs forestiers est interdit. Consultez la carte de vigilance avant chaque sortie."
+                },
+                {
+                    q: "Que faire d'un mégot de cigarette en forêt ?",
+                    c: [
+                        "Le jeter, il s'éteint tout seul",
+                        "L'écraser sur le sol puis le laisser",
+                        "Ne jamais fumer en forêt et ne rien jeter"
+                    ],
+                    b: 2,
+                    e: "Un seul mégot peut démarrer un incendie, surtout en été lorsque la végétation est sèche."
+                },
+                {
+                    q: "Le débroussaillement autour de mon habitation, c'est…",
+                    c: [
+                        "Un simple conseil",
+                        "Une obligation légale dans les zones exposées",
+                        "Réservé aux professionnels"
+                    ],
+                    b: 1,
+                    e: "Dans les zones exposées au risque d'incendie, le débroussaillement est obligatoire. La mairie vous indique les règles pour votre parcelle."
+                },
+                {
+                    q: "Un feu approche de votre maison et aucune évacuation n'est ordonnée. Que faites-vous ?",
+                    c: [
+                        "Je prends la voiture et je fuis par la route",
+                        "Je me confine dans la maison, volets et fenêtres fermés",
+                        "Je reste dehors pour arroser les flammes"
+                    ],
+                    b: 1,
+                    e: "Une maison en dur offre la meilleure protection : on s'y confine, volets et fenêtres fermés, et on suit les consignes des secours. Fuir en voiture est dangereux (fumée, routes bloquées)."
+                },
+                {
+                    q: "Quelles conditions augmentent le plus le risque de départ de feu ?",
+                    c: [
+                        "Un temps frais et humide",
+                        "Chaleur, sécheresse et vent fort",
+                        "Une nuit de pleine lune"
+                    ],
+                    b: 1,
+                    e: "La chaleur et la sécheresse assèchent la végétation, et le vent propage très vite les flammes : c'est pourquoi l'été demande une vigilance particulière."
+                }
+            ];
+
+            const box = document.getElementById("quizBox");
+            let index = 0;
+            let score = 0;
+
+            function el(tag, className, text) {
+                const node = document.createElement(tag);
+                if (className) node.className = className;
+                if (text) node.textContent = text;
+                return node;
+            }
+
+            function showQuestion() {
+                box.innerHTML = "";
+
+                const data = questions[index];
+
+                const progress = el("div", "quiz-progress");
+                const bar = el("span");
+                bar.style.width = (index / questions.length * 100) + "%";
+                progress.appendChild(bar);
+
+                box.appendChild(progress);
+                box.appendChild(el("div", "quiz-count", "Question " + (index + 1) + " sur " + questions.length));
+                box.appendChild(el("div", "quiz-question", data.q));
+
+                const answers = data.c.map((text, i) => {
+                    const button = el("button", "quiz-answer", text);
+                    button.type = "button";
+                    button.addEventListener("click", () => answer(i, answers, bar));
+                    box.appendChild(button);
+                    return button;
+                });
+            }
+
+            function answer(choice, answers, bar) {
+                const data = questions[index];
+
+                answers.forEach((button, i) => {
+                    button.disabled = true;
+                    if (i === data.b) {
+                        button.classList.add("correct");
+                    } else if (i === choice) {
+                        button.classList.add("wrong");
+                    }
+                });
+
+                if (choice === data.b) score++;
+
+                bar.style.width = ((index + 1) / questions.length * 100) + "%";
+
+                box.appendChild(el(
+                    "div",
+                    "quiz-explain",
+                    (choice === data.b ? "✅ Bonne réponse ! " : "❌ Pas tout à fait. ") + data.e
+                ));
+
+                const isLast = index === questions.length - 1;
+                const next = el("button", "btn", isLast ? "Voir mon résultat" : "Question suivante");
+                next.type = "button";
+                next.addEventListener("click", () => {
+                    index++;
+                    if (index < questions.length) {
+                        showQuestion();
+                    } else {
+                        showResult();
+                    }
+                });
+                box.appendChild(next);
+                next.focus();
+            }
+
+            function showResult() {
+                box.innerHTML = "";
+
+                const good = score >= SEUIL;
+                const result = el("div", "quiz-result");
+
+                result.appendChild(el("div", "quiz-count", "Votre résultat"));
+                result.appendChild(el("div", "quiz-score", score + " / " + questions.length));
+                result.appendChild(el(
+                    "h3",
+                    "quiz-verdict",
+                    good ? "🎉 Vous avez les bons réflexes !" : "⚠️ Vous n'avez pas les bons réflexes."
+                ));
+                result.appendChild(el(
+                    "p",
+                    "",
+                    good
+                        ? "Bravo ! Continuez à partager ces bons gestes autour de vous pour protéger nos massifs."
+                        : "Pas de panique : relisez les explications et rejouez pour progresser."
+                ));
+
+                const replay = el("button", "btn", "Rejouer");
+                replay.type = "button";
+                replay.addEventListener("click", () => {
+                    index = 0;
+                    score = 0;
+                    showQuestion();
+                });
+                result.appendChild(replay);
+
+                box.appendChild(result);
+            }
+
+            showQuestion();
+
+        })();
     </script>
 
 </body>
