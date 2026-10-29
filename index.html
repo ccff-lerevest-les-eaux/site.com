@@ -643,6 +643,54 @@
         }
 
         /* =========================
+           DÉBROUSSAILLEMENT (OLD)
+        ========================== */
+
+        .old-section {
+            background: var(--gris);
+        }
+
+        .old-list {
+            color: var(--bleu);
+            font-size: 19px;
+            line-height: 1.8;
+            margin: 15px 0 20px 25px;
+        }
+
+        .old-list li {
+            margin-bottom: 8px;
+        }
+
+        .old-box p + p {
+            margin-top: 18px;
+        }
+
+        .old-plan {
+            max-width: 950px;
+            margin: 40px auto 0;
+            background: var(--bleu);
+            padding: 10px;
+            border-radius: 20px;
+            border-bottom: 6px solid var(--orange);
+            box-shadow: 0 10px 30px rgba(11,31,58,0.18);
+        }
+
+        .old-plan img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 13px;
+        }
+
+        .old-plan figcaption {
+            text-align: center;
+            color: var(--orange);
+            font-weight: 900;
+            font-size: 18px;
+            padding: 14px 8px 8px;
+        }
+
+        /* =========================
            QUIZ DES BONS RÉFLEXES
         ========================== */
 
@@ -840,6 +888,7 @@
     <nav>
         <a href="#accueil">Accueil</a>
         <a href="#role">Notre rôle</a>
+        <a href="#old">Débroussaillement</a>
         <a href="#ete">Période estivale</a>
         <a href="#quiz">Quiz</a>
         <a href="#photos">Photos</a>
@@ -924,6 +973,73 @@
     </section>
 
 
+    <!-- DÉBROUSSAILLEMENT (OLD) -->
+
+    <section id="old" class="old-section">
+
+        <h2 class="section-title">Débroussaillement</h2>
+
+        <p class="intro">
+            Les obligations légales de débroussaillement (OLD) sont la
+            première protection de votre maison contre les incendies de forêt.
+        </p>
+
+        <div class="summer-box old-box" style="margin-top: 50px;">
+
+            <h3>🌿 Que dit la loi ?</h3>
+
+            <p>
+                Dans les zones exposées aux incendies de forêt (bois, forêts,
+                maquis, garrigues et terrains situés à moins de 200 mètres),
+                le propriétaire d'une construction doit débroussailler et
+                maintenir son terrain débroussaillé :
+            </p>
+
+            <ul class="old-list">
+                <li>
+                    <strong>50 mètres</strong> autour de la maison, des chantiers
+                    et de toute installation (cette distance peut être portée
+                    jusqu'à 100 mètres selon les arrêtés en vigueur) ;
+                </li>
+                <li>
+                    <strong>10 mètres</strong> de part et d'autre de la voie
+                    privée qui y donne accès ;
+                </li>
+                <li>
+                    y compris sur le <strong>terrain du voisin</strong> si la
+                    zone de 50 mètres déborde de votre parcelle.
+                </li>
+            </ul>
+
+            <p>
+                Débroussailler ne veut pas dire raser : on coupe les broussailles
+                et l'herbe sèche, on élague les arbres, on supprime le bois mort,
+                on évacue les déchets de coupe et on espace les arbres pour que
+                le feu ne puisse pas se propager. Les règles précises (hauteur
+                d'élagage, espacement) sont fixées par arrêté préfectoral.
+            </p>
+
+            <p>
+                Sans travaux après mise en demeure, l'amende administrative peut
+                atteindre 50 € par mètre carré concerné, et la commune peut faire
+                réaliser les travaux d'office aux frais du propriétaire.
+            </p>
+
+            <p class="vigilance-note">
+                Pour savoir si votre terrain est concerné et connaître les règles
+                qui s'appliquent, renseignez-vous auprès de la mairie.
+            </p>
+
+        </div>
+
+        <figure class="old-plan">
+            <img src="photo13.svg" alt="Plan type : zone de 50 mètres à débroussailler autour de la maison, 10 mètres de chaque côté de la voie privée, et zone qui déborde chez le voisin">
+            <figcaption>Plan type des zones à débroussailler</figcaption>
+        </figure>
+
+    </section>
+
+
     <!-- NOMBRE DE MEMBRES -->
 
     <section class="number-section">
@@ -987,6 +1103,7 @@
 
         <p class="intro">
             6 questions pour tester vos réflexes face au risque d'incendie.
+            Avec au moins 4 bonnes réponses, vous avez les bons réflexes !
         </p>
 
         <div class="quiz-box" id="quizBox" aria-live="polite"></div>
@@ -1469,3 +1586,4 @@
 
 </body>
 </html>
+
